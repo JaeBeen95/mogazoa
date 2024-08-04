@@ -1,0 +1,33 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 6.5rem;
+  padding: 2.4rem 28.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.primary {
+  background: linear-gradient(91deg, #5097fa 0%, #5363ff 100%);
+  color: var(--white);
+
+  &[disabled] {
+    background: var(--black-1);
+    color: var(--gray-2);
+  }
+}
+
+.secondary {
+  background: var(--color-white);
+  color: var(--color-primary);
+
+  &[disabled] {
+    background: var(--light-gray);
+    color: var(--dark-gray);
+  }
+}

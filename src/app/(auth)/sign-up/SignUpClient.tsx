@@ -1,7 +1,9 @@
 'use client'
+import Link from 'next/link'
 import { useState } from 'react'
 
 import Input from '@/components/input/Input'
+import Button from '@/components/button/Button'
 import styles from '@/app/(auth)/Auth.module.scss'
 
 export default function SignUpClient() {
@@ -27,11 +29,11 @@ export default function SignUpClient() {
           <Input
             id="nickname"
             name="nickname"
-            value={password}
+            value={nickname}
             label="닉네임"
             labelVisible
             placeholder="닉네임을 입력해 주세요"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setNickname(e.target.value)}
           />
 
           <Input
@@ -46,7 +48,7 @@ export default function SignUpClient() {
           />
 
           <Input
-          password
+            password
             id="password"
             name="password"
             value={password}
@@ -55,6 +57,10 @@ export default function SignUpClient() {
             placeholder="비밀번호를 한번 더 입력해 주세요"
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          <Button variant="primary" width="100%">
+            가입하기
+          </Button>
         </form>
       </div>
     </section>

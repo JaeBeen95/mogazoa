@@ -1,98 +1,68 @@
-import { useState, ChangeEvent } from 'react'
-import Icon from '@/components/icon/Icon'
+import { ReactNode } from 'react'
+import { InputContext, useInputContext } from './InputContext'
+import type { InputProps, LabelProps, InputFieldProps } from './InputTypes.type'
+import classNames from 'classnames'
 import styles from './Input.module.scss'
 
-import classNames from 'classnames'
-
-interface InputProps {
-  id: string
-  label: string
-  labelVisible?: boolean
-  name?: string
-  value?: string
-  email?: boolean
-  password?: boolean
-  placeholder?: string
-  readOnly?: boolean
-  disabled?: boolean
-  error?: { message: string }
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+function Label({ children, visible = true }: LabelProps) {
+  const { id } = useInputContext()
+  return (
+    <label
+      className={classNames(styles.label, !visible && styles.labelHidden)}
+      htmlFor={id}
+    >
+      {children}
+    </label>
+  )
 }
 
-export default function Input({
-  id,
-  label,
-  labelVisible,
+function InputField({
+  type = 'text',
   name = '',
-  value,
-  email,
-  password,
   placeholder = '',
   readOnly,
   disabled,
-  error,
-  onChange,
-}: InputProps) {
-  const [inputValue, setInputValue] = useState(value ? value : '')
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
-
-  const checkType = () => {
-    if (email) {
-      return 'email'
-    }
-
-    if (password) {
-      return isPasswordVisible ? 'text' : 'password'
-    }
-
-    return 'text'
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    onChange(e)
-  }
-
-  const iconType = isPasswordVisible ? 'show' : 'hide'
-  const iconLabel = `비밀번호 ${isPasswordVisible ? '표시' : '감춤'}`
+  children,
+}: InputFieldProps & { children?: ReactNode }) {
+  const { id, value, onChange, error } = useInputContext()
 
   return (
-    <div className={styles.container}>
-      <label
-        className={classNames(styles.label, labelVisible || styles.labelHidden)}
-        htmlFor={id}
-      >
-        {label}
-      </label>
-      <div
-        className={classNames(
-          styles.inputWrapper,
-          error && styles.inputWrapperError,
-        )}
-      >
-        <input
-          className={styles.input}
-          type={checkType()}
-          id={id}
-          name={name}
-          value={inputValue}
-          placeholder={placeholder}
-          readOnly={readOnly}
-          disabled={disabled}
-          onChange={handleChange}
-        />
-        {password ? (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={() => setIsPasswordVisible((prev) => !prev)}
-            disabled={disabled}
-          >
-            <Icon type={iconType} alt={iconLabel} title={iconLabel} />
-          </button>
-        ) : null}
-      </div>
-      {error && <span role="alert">{error.message}</span>}
+    <div
+      className={classNames(
+        styles.inputWrapper,
+        error && styles.inputWrapperError,
+      )}
+    >
+      <input
+        className={styles.input}
+        type={type}
+        id={id}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        readOnly={readOnly}
+        disabled={disabled}
+        onChange={onChange}
+      />
+      {children}
     </div>
   )
 }
+
+function ErrorMessage() {
+  const { error } = useInputContext()
+  if (!error) return null
+  return <span role="alert">{error.message}</span>
+}
+
+export function Input({ children, ...contextValue }: InputProps) {
+  return (
+    <InputContext.Provider value={contextValue}>
+      <div className={styles.container}>{children}</div>
+    </InputContext.Provider>
+  )
+}
+
+Input.Label = Label
+Input.InputField = InputField
+Input.ErrorMessage = ErrorMessage

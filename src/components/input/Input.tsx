@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React from 'react'
 import { InputContext, useInputContext } from './InputContext'
 import type { InputProps, LabelProps, InputFieldProps } from './InputTypes.type'
 import classNames from 'classnames'
@@ -23,14 +23,14 @@ function InputField({
   readOnly,
   disabled,
   children,
-}: InputFieldProps & { children?: ReactNode }) {
+}: InputFieldProps & { children?: React.ReactNode }) {
   const { id, value, onChange, error } = useInputContext()
 
   return (
     <div
       className={classNames(
         styles.inputWrapper,
-        error && styles.inputWrapperError,
+        value !== '' && error && styles.inputWrapperError,
       )}
     >
       <input
@@ -52,7 +52,11 @@ function InputField({
 function ErrorMessage() {
   const { error } = useInputContext()
   if (!error) return null
-  return <span role="alert">{error.message}</span>
+  return (
+    <span className={styles.error} role="alert">
+      {error.message}
+    </span>
+  )
 }
 
 export function Input({ children, ...contextValue }: InputProps) {

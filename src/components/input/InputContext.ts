@@ -14,7 +14,9 @@ export const PasswordInputContext = createContext<
 export function useInputContext() {
   const context = useContext(InputContext)
   if (!context) {
-    throw new Error('useInputContext must be used within an Input component')
+    throw new Error(
+      'Input 컴포넌트 내에서만 useInputContext를 사용할 수 있습니다.',
+    )
   }
   return context
 }
@@ -23,7 +25,7 @@ export function usePasswordInputContext() {
   const context = useContext(PasswordInputContext)
   if (!context) {
     throw new Error(
-      'usePasswordInputContext must be used within a PasswordInput component',
+      'PasswordInput 컴포넌트 내에서만 usePasswordInputContext를 사용할 수 있습니다.',
     )
   }
   return context

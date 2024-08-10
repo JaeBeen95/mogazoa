@@ -1,5 +1,5 @@
-import classNames from 'classnames'
 import React from 'react'
+import classNames from 'classnames'
 import styles from './Button.module.scss'
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary'

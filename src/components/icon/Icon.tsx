@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import showPath from '@/assets/status=visibility_300.svg'
-import hidePath from '@/assets/status=visibility_off_300.svg'
+import showPassword from '@/assets/eye-open.svg'
+import hidePassword from '@/assets/eye-closed.svg'
 
 interface IconProps {
   type: 'show' | 'hide'
@@ -14,10 +14,10 @@ export default function Icon({ type, alt = '', ...restProps }: IconProps) {
 
   switch (type) {
     case 'show':
-      src = showPath
+      src = showPassword
       break
     case 'hide':
-      src = hidePath
+      src = hidePassword
       break
     default:
       throw new Error('지원하는 아이콘 타입이 존재하지 않습니다.')

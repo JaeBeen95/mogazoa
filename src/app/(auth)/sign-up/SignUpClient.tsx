@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 import { Input, PasswordInput } from '@/components/input'
 import Button from '@/components/button/Button'
 import styles from '@/app/(auth)/Auth.module.scss'
@@ -29,19 +30,20 @@ interface ValidationRule {
 const validationRules = {
   email: {
     pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    message: '올바른 이메일 주소를 입력해주세요.',
+    message: '올바른 이메일 주소를 입력해주세요',
   },
   nickname: {
     pattern: /^[a-zA-Z0-9가-힣]{2,10}$/,
-    message: '닉네임은 2-10자의 영문, 숫자, 한글만 사용 가능합니다.',
+    message: '닉네임은 2-10자의 영문, 숫자, 한글만 사용 가능합니다',
   },
   password: {
-    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-    message: '비밀번호는 최소 8자의 영문자와 숫자 조합이어야 합니다.',
+    pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
+    message:
+      '비밀번호는 8-20자의 영문자, 숫자, 특수문자를 모두 포함해야 합니다',
   },
   confirmPassword: {
     pattern: /.*/,
-    message: '비밀번호가 일치하지 않습니다.',
+    message: '비밀번호가 일치하지 않습니다',
   },
 } as const
 
@@ -72,7 +74,7 @@ function useFormState(initialState: FormData) {
         'confirmPassword',
         formData.confirmPassword,
       )
-      setErrors((prev) => ({ ...prev, confirmPasswordError }))
+      setErrors((prev) => ({ ...prev, confirmPassword: confirmPasswordError }))
     }
   }
 
@@ -105,20 +107,66 @@ function useSignUpLogic() {
     password: '',
     confirmPassword: '',
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [apiError, setApiError] = useState<string | null>(null)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isFormValid()) {
-      console.log('')
+      setIsLoading(true)
+      setApiError(null)
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_KEY}/auth/signUp`,
+          {
+            email: formData.email,
+            nickname: formData.nickname,
+            password: formData.password,
+            passwordConfirmation: formData.confirmPassword,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+
+        console.log('회원가입 성공:', response.data)
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          setApiError(
+            error.response.data.message || '회원가입 중 오류가 발생했습니다.',
+          )
+        } else {
+          setApiError('알 수 없는 오류가 발생했습니다.')
+        }
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
-  return { formData, errors, handleChange, handleSubmit, isFormValid }
+  return {
+    formData,
+    errors,
+    handleChange,
+    handleSubmit,
+    isFormValid,
+    isLoading,
+    apiError,
+  }
 }
 
 export default function SignUpClient() {
-  const { formData, errors, handleChange, handleSubmit, isFormValid } =
-    useSignUpLogic()
+  const {
+    formData,
+    errors,
+    handleChange,
+    handleSubmit,
+    isFormValid,
+    isLoading,
+    apiError,
+  } = useSignUpLogic()
 
   return (
     <section className={styles.page}>
@@ -184,13 +232,15 @@ export default function SignUpClient() {
             <PasswordInput.ErrorMessage />
           </PasswordInput>
 
+          {apiError && <div className={styles.error}>{apiError}</div>}
+
           <Button
             variant="primary"
             width="100%"
             type="submit"
-            disabled={!isFormValid()}
+            disabled={!isFormValid() || isLoading}
           >
-            가입하기
+            {isLoading ? '처리 중...' : '가입하기'}
           </Button>
         </form>
       </div>

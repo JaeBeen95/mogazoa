@@ -1,6 +1,9 @@
-import React from 'react'
-import { InputContext, useInputContext } from './InputContext'
-import type { InputProps, LabelProps, InputFieldProps } from './InputTypes.type'
+import { InputContext, useInputContext } from '@/context/InputContext'
+import type {
+  InputProps,
+  LabelProps,
+  InputFieldProps,
+} from '@/types/Input.types'
 import classNames from 'classnames'
 import styles from './Input.module.scss'
 
@@ -59,7 +62,7 @@ function ErrorMessage() {
   )
 }
 
-export function Input({ children, ...contextValue }: InputProps) {
+export default function Input({ children, ...contextValue }: InputProps) {
   return (
     <InputContext.Provider value={contextValue}>
       <div className={styles.container}>{children}</div>

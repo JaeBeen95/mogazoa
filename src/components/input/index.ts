@@ -1,2 +1,4 @@
-export { Input } from './Input'
-export { PasswordInput } from './PasswordInput'
+import Input from './Input'
+import PasswordInput from './PasswordInput'
+
+export { Input, PasswordInput }

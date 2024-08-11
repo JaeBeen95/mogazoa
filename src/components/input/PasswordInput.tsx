@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Input } from './Input'
-import type { InputProps, InputFieldProps } from './InputTypes.type'
-import Icon from '@/components/icon/Icon'
+import { useState } from 'react'
+import { Input } from '@/components/input'
+import { Icon } from '@/components/icon'
+import type { InputProps, InputFieldProps } from '@/types/Input.types'
 import styles from './Input.module.scss'
 
 function ToggleEye({
@@ -38,7 +38,7 @@ function PasswordInputField(props: InputFieldProps) {
   )
 }
 
-export function PasswordInput({ children, ...props }: InputProps) {
+export default function PasswordInput({ children, ...props }: InputProps) {
   return <Input {...props}>{children}</Input>
 }
 

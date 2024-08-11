@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Input } from '@/components/input'
 import { Icon } from '@/components/icon'
-import type { InputProps, InputFieldProps } from '@/types/Input.types'
+import type { InputProps, InputFieldProps } from '@/types/input.types'
 import styles from './Input.module.scss'
 
 function ToggleEye({

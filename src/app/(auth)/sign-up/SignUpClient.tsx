@@ -13,7 +13,6 @@ export default function SignUpClient() {
     handleSubmit,
     isFormValid,
     isLoading,
-    apiError,
   } = useSignUp()
 
   return (
@@ -80,15 +79,13 @@ export default function SignUpClient() {
             <PasswordInput.ErrorMessage />
           </PasswordInput>
 
-          {apiError && <div className={styles.error}>{apiError}</div>}
-
           <Button
             variant="primary"
             width="100%"
             type="submit"
             disabled={!isFormValid() || isLoading}
           >
-            {isLoading ? '처리 중...' : '가입하기'}
+            가입하기
           </Button>
         </form>
       </div>

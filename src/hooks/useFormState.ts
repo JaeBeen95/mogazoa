@@ -10,14 +10,17 @@ export const useFormState = (initialState: FormData) => {
     name: FormField,
     value: string,
   ): string | undefined => {
-    if (name === 'confirmPassword') {
-      return value === formData.password
-        ? undefined
-        : validationRules[name].message
+    const { pattern, errorMessage } = validationRules[name]
+
+    if (!pattern.test(value)) {
+      return errorMessage
     }
 
-    const { pattern, message } = validationRules[name]
-    return pattern.test(value) ? undefined : message
+    if (name === 'confirmPassword' && value !== formData.password) {
+      return validationRules.confirmPassword.errorMessage
+    }
+
+    return undefined
   }
 
   const updateErrors = (name: FormField, value: string) => {
@@ -49,7 +52,7 @@ export const useFormState = (initialState: FormData) => {
 
   const getApiRequestData = () => {
     const { confirmPassword, ...rest } = formData
-    return { ...rest, confirmPassword }
+    return rest
   }
 
   return {

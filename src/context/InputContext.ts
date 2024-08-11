@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 import type {
   InputContextType,
   PasswordInputContextType,
-} from '@/types/Input.types'
+} from '@/types/input.types'
 
 export const InputContext = createContext<InputContextType | undefined>(
   undefined,

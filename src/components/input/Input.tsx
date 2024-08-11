@@ -3,7 +3,7 @@ import type {
   InputProps,
   LabelProps,
   InputFieldProps,
-} from '@/types/Input.types'
+} from '@/types/input.types'
 import classNames from 'classnames'
 import styles from './Input.module.scss'
 

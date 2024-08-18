@@ -8,7 +8,7 @@ import styles from '@/app/(auth)/Auth.module.scss'
 export default function SignUpClient() {
   const {
     formData,
-    errors,
+    errorMessages,
     handleChange,
     handleSubmit,
     isFormValid,
@@ -23,7 +23,9 @@ export default function SignUpClient() {
             id="email"
             value={formData.email}
             onChange={handleChange}
-            error={errors.email ? { message: errors.email } : undefined}
+            error={
+              errorMessages.email ? { message: errorMessages.email } : undefined
+            }
           >
             <Input.Label>이메일</Input.Label>
             <Input.InputField
@@ -37,7 +39,11 @@ export default function SignUpClient() {
             id="nickname"
             value={formData.nickname}
             onChange={handleChange}
-            error={errors.nickname ? { message: errors.nickname } : undefined}
+            error={
+              errorMessages.nickname
+                ? { message: errorMessages.nickname }
+                : undefined
+            }
           >
             <Input.Label>닉네임</Input.Label>
             <Input.InputField
@@ -51,7 +57,11 @@ export default function SignUpClient() {
             id="password"
             value={formData.password}
             onChange={handleChange}
-            error={errors.password ? { message: errors.password } : undefined}
+            error={
+              errorMessages.password
+                ? { message: errorMessages.password }
+                : undefined
+            }
           >
             <PasswordInput.Label>비밀번호</PasswordInput.Label>
             <PasswordInput.InputField
@@ -66,8 +76,8 @@ export default function SignUpClient() {
             value={formData.confirmPassword}
             onChange={handleChange}
             error={
-              errors.confirmPassword
-                ? { message: errors.confirmPassword }
+              errorMessages.confirmPassword
+                ? { message: errorMessages.confirmPassword }
                 : undefined
             }
           >
@@ -85,7 +95,7 @@ export default function SignUpClient() {
             type="submit"
             disabled={!isFormValid() || isLoading}
           >
-            가입하기
+            {isLoading ? '처리 중...' : '가입하기'}
           </Button>
         </form>
       </div>

@@ -3,13 +3,18 @@ import { useFormState } from './useFormState'
 import { postSignUp } from '@/api/authApi'
 
 export const useSignUp = () => {
-  const { formData, errors, handleChange, isFormValid, getApiRequestData } =
-    useFormState({
-      email: '',
-      nickname: '',
-      password: '',
-      confirmPassword: '',
-    })
+  const {
+    formData,
+    errorMessages,
+    handleChange,
+    isFormValid,
+    getApiRequestData,
+  } = useFormState({
+    email: '',
+    nickname: '',
+    password: '',
+    confirmPassword: '',
+  })
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -30,7 +35,7 @@ export const useSignUp = () => {
 
   return {
     formData,
-    errors,
+    errorMessages,
     handleChange,
     handleSubmit,
     isFormValid,

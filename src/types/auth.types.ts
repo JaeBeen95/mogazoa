@@ -7,7 +7,7 @@ export interface FormData {
   confirmPassword: string
 }
 
-export interface FormErrors {
+export interface FormErrorMessages {
   email?: string
   nickname?: string
   password?: string

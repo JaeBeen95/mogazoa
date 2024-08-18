@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import type { FormData, FormErrors, FormField } from '@/types/auth.types'
+import type { FormData, FormErrorMessages, FormField } from '@/types/auth.types'
 import { validationRules } from '@/constants/validationRules'
 
 export const useFormState = (initialState: FormData) => {
   const [formData, setFormData] = useState<FormData>(initialState)
-  const [errors, setErrors] = useState<FormErrors>({})
+  const [errorMessages, setErrorMessages] = useState<FormErrorMessages>({})
 
   const validateField = (
     name: FormField,
@@ -24,15 +24,15 @@ export const useFormState = (initialState: FormData) => {
   }
 
   const updateErrors = (name: FormField, value: string) => {
-    const error = validateField(name, value)
-    setErrors((prev) => ({ ...prev, [name]: error }))
+    const errorMessage = validateField(name, value)
+    setErrorMessages((prev) => ({ ...prev, [name]: errorMessage }))
 
     if (name === 'password') {
       const confirmPasswordError = validateField(
         'confirmPassword',
         formData.confirmPassword,
       )
-      setErrors((prev) => ({ ...prev, confirmPasswordError }))
+      setErrorMessages((prev) => ({ ...prev, confirmPasswordError }))
     }
   }
 
@@ -44,7 +44,7 @@ export const useFormState = (initialState: FormData) => {
 
   const isFormValid = () => {
     const isAllFieldsFilled = Object.values(formData).every(Boolean)
-    const isNoErrors = Object.values(errors).every(
+    const isNoErrors = Object.values(errorMessages).every(
       (error) => error === undefined,
     )
     return isAllFieldsFilled && isNoErrors
@@ -57,7 +57,7 @@ export const useFormState = (initialState: FormData) => {
 
   return {
     formData,
-    errors,
+    errorMessages,
     handleChange,
     isFormValid,
     getApiRequestData,

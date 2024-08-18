@@ -1,6 +1,6 @@
 'use client'
 
-import { Input, PasswordInput } from '@/components/input'
+import { FormControl, PasswordFormControl } from '@/components/form-control'
 import { Button } from '@/components/button'
 import { useSignUp } from '@/hooks/useSignUp'
 import styles from '@/app/(auth)/Auth.module.scss'
@@ -19,7 +19,7 @@ export default function SignUpClient() {
     <section className={styles.page}>
       <div className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <Input
+          <FormControl
             id="email"
             value={formData.email}
             onChange={handleChange}
@@ -27,15 +27,15 @@ export default function SignUpClient() {
               errorMessages.email ? { message: errorMessages.email } : undefined
             }
           >
-            <Input.Label>이메일</Input.Label>
-            <Input.InputField
+            <FormControl.Label>이메일</FormControl.Label>
+            <FormControl.Field
               name="email"
               placeholder="이메일을 입력해 주세요"
             />
-            <Input.ErrorMessage />
-          </Input>
+            <FormControl.ErrorMessage />
+          </FormControl>
 
-          <Input
+          <FormControl
             id="nickname"
             value={formData.nickname}
             onChange={handleChange}
@@ -45,15 +45,16 @@ export default function SignUpClient() {
                 : undefined
             }
           >
-            <Input.Label>닉네임</Input.Label>
-            <Input.InputField
+            <FormControl.Label>닉네임</FormControl.Label>
+            <FormControl.Field
               name="nickname"
               placeholder="닉네임을 입력해 주세요"
+              autoComplete="nick-name"
             />
-            <Input.ErrorMessage />
-          </Input>
+            <FormControl.ErrorMessage />
+          </FormControl>
 
-          <PasswordInput
+          <PasswordFormControl
             id="password"
             value={formData.password}
             onChange={handleChange}
@@ -63,15 +64,16 @@ export default function SignUpClient() {
                 : undefined
             }
           >
-            <PasswordInput.Label>비밀번호</PasswordInput.Label>
-            <PasswordInput.InputField
+            <PasswordFormControl.Label>비밀번호</PasswordFormControl.Label>
+            <PasswordFormControl.Field
               name="password"
               placeholder="비밀번호를 입력해 주세요"
+              autoComplete="new-password"
             />
-            <PasswordInput.ErrorMessage />
-          </PasswordInput>
+            <PasswordFormControl.ErrorMessage />
+          </PasswordFormControl>
 
-          <PasswordInput
+          <PasswordFormControl
             id="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
@@ -81,13 +83,14 @@ export default function SignUpClient() {
                 : undefined
             }
           >
-            <PasswordInput.Label>비밀번호 확인</PasswordInput.Label>
-            <PasswordInput.InputField
+            <PasswordFormControl.Label>비밀번호 확인</PasswordFormControl.Label>
+            <PasswordFormControl.Field
               name="confirmPassword"
               placeholder="비밀번호를 한번 더 입력해 주세요"
+              autoComplete="new-password"
             />
-            <PasswordInput.ErrorMessage />
-          </PasswordInput>
+            <PasswordFormControl.ErrorMessage />
+          </PasswordFormControl>
 
           <Button
             variant="primary"

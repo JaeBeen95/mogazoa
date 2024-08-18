@@ -2,7 +2,7 @@
   display: inline-flex;
   flex-direction: column;
 
-  .inputWrapper {
+  .fieldWrapper {
     position: relative;
     display: inline-flex;
     border-radius: 8px;
@@ -24,7 +24,7 @@
     }
   }
 
-  .inputWrapperError {
+  .fieldWrapperError {
     &::before {
       background: var(--red);
     }
@@ -34,7 +34,7 @@
     }
   }
 
-  .input {
+  .field {
     flex: 1;
     padding: 2.3rem 2rem;
     background: var(--black-3);

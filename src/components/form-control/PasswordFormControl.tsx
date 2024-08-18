@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Input } from '@/components/input'
+import FormControl from '@/components/form-control/FormControl'
 import { Icon } from '@/components/icon'
-import type { InputProps, InputFieldProps } from '@/types/input.types'
-import styles from './Input.module.scss'
+import type { FormControlProps, FieldProps } from '@/types/form.types'
+import styles from './FormControl.module.scss'
 
 function ToggleEye({
   isPasswordVisible,
@@ -25,23 +25,30 @@ function ToggleEye({
   )
 }
 
-function PasswordInputField(props: InputFieldProps) {
+function PasswordField({ autoComplete, ...props }: FieldProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   return (
-    <Input.InputField {...props} type={isPasswordVisible ? 'text' : 'password'}>
+    <FormControl.Field
+      {...props}
+      type={isPasswordVisible ? 'text' : 'password'}
+      autoComplete={autoComplete}
+    >
       <ToggleEye
         isPasswordVisible={isPasswordVisible}
         setIsPasswordVisible={setIsPasswordVisible}
       />
-    </Input.InputField>
+    </FormControl.Field>
   )
 }
 
-export default function PasswordInput({ children, ...props }: InputProps) {
-  return <Input {...props}>{children}</Input>
+export default function PasswordFormControl({
+  children,
+  ...props
+}: FormControlProps) {
+  return <FormControl {...props}>{children}</FormControl>
 }
 
-PasswordInput.Label = Input.Label
-PasswordInput.InputField = PasswordInputField
-PasswordInput.ErrorMessage = Input.ErrorMessage
+PasswordFormControl.Label = FormControl.Label
+PasswordFormControl.Field = PasswordField
+PasswordFormControl.ErrorMessage = FormControl.ErrorMessage

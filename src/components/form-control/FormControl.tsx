@@ -1,14 +1,17 @@
-import { InputContext, useInputContext } from '@/context/InputContext'
+import {
+  FormControlContext,
+  useFormControlContext,
+} from '@/context/FormControlContext'
 import type {
-  InputProps,
+  FormControlProps,
   LabelProps,
-  InputFieldProps,
-} from '@/types/input.types'
+  FieldProps,
+} from '@/types/form.types'
 import classNames from 'classnames'
-import styles from './Input.module.scss'
+import styles from './FormControl.module.scss'
 
 function Label({ children, visible = true }: LabelProps) {
-  const { id } = useInputContext()
+  const { id } = useFormControlContext()
   return (
     <label
       className={classNames(styles.label, !visible && styles.labelHidden)}
@@ -19,25 +22,26 @@ function Label({ children, visible = true }: LabelProps) {
   )
 }
 
-function InputField({
+function Field({
   type = 'text',
   name = '',
   placeholder = '',
   readOnly,
   disabled,
   children,
-}: InputFieldProps & { children?: React.ReactNode }) {
-  const { id, value, onChange, error } = useInputContext()
+  autoComplete,
+}: FieldProps & { children?: React.ReactNode }) {
+  const { id, value, onChange, error } = useFormControlContext()
 
   return (
     <div
       className={classNames(
-        styles.inputWrapper,
-        value !== '' && error && styles.inputWrapperError,
+        styles.fieldWrapper,
+        value !== '' && error && styles.fieldWrapperError,
       )}
     >
       <input
-        className={styles.input}
+        className={styles.field}
         type={type}
         id={id}
         name={name}
@@ -46,6 +50,7 @@ function InputField({
         readOnly={readOnly}
         disabled={disabled}
         onChange={onChange}
+        autoComplete={autoComplete}
       />
       {children}
     </div>
@@ -53,7 +58,7 @@ function InputField({
 }
 
 function ErrorMessage() {
-  const { error } = useInputContext()
+  const { error } = useFormControlContext()
   if (!error) return null
   return (
     <span className={styles.error} role="alert">
@@ -62,14 +67,17 @@ function ErrorMessage() {
   )
 }
 
-export default function Input({ children, ...contextValue }: InputProps) {
+export default function FormControl({
+  children,
+  ...contextValue
+}: FormControlProps) {
   return (
-    <InputContext.Provider value={contextValue}>
+    <FormControlContext.Provider value={contextValue}>
       <div className={styles.container}>{children}</div>
-    </InputContext.Provider>
+    </FormControlContext.Provider>
   )
 }
 
-Input.Label = Label
-Input.InputField = InputField
-Input.ErrorMessage = ErrorMessage
+FormControl.Label = Label
+FormControl.Field = Field
+FormControl.ErrorMessage = ErrorMessage

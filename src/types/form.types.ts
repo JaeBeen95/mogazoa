@@ -6,7 +6,7 @@ export interface ErrorType {
   message: string
 }
 
-export interface InputContextType {
+export interface FieldContextType {
   id: string
   value: string
   onChange: InputChangeHandler
@@ -15,7 +15,7 @@ export interface InputContextType {
   children?: ReactNode
 }
 
-export interface PasswordInputContextType extends InputContextType {
+export interface PasswordInputContextType extends FieldContextType {
   isPasswordVisible: boolean
   setIsPasswordVisible: (isVisible: boolean) => void
 }
@@ -25,14 +25,15 @@ export interface LabelProps {
   visible?: boolean
 }
 
-export interface InputFieldProps {
+export interface FieldProps {
   name?: string
   placeholder?: string
   readOnly?: boolean
   disabled?: boolean
   type?: string
+  autoComplete?: string
 }
 
-export interface InputProps extends InputContextType {
+export interface FormControlProps extends FieldContextType {
   children: ReactNode
 }

@@ -1,18 +1,18 @@
 import { createContext, useContext } from 'react'
 import type {
-  InputContextType,
+  FieldContextType,
   PasswordInputContextType,
-} from '@/types/input.types'
+} from '@/types/form.types'
 
-export const InputContext = createContext<InputContextType | undefined>(
+export const FormControlContext = createContext<FieldContextType | undefined>(
   undefined,
 )
 export const PasswordInputContext = createContext<
   PasswordInputContextType | undefined
 >(undefined)
 
-export function useInputContext() {
-  const context = useContext(InputContext)
+export function useFormControlContext() {
+  const context = useContext(FormControlContext)
   if (!context) {
     throw new Error('useInputContext는 Input 내부에서만 사용 가능합니다.')
   }

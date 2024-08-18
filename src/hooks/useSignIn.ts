@@ -27,7 +27,7 @@ export const useSignIn = () => {
       try {
         const signInData = getApiRequestData() as SignInApiRequest
         const response = await postSignIn(signInData)
-        // TODO: 로그인 성공 처리
+        // TODO: 로그인 성공 처리(토큰 등)
         console.log(response)
         router.push('/')
       } catch (error) {

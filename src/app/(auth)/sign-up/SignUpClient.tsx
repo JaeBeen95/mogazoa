@@ -37,7 +37,7 @@ export default function SignUpClient() {
 
           <FormControl
             id="nickname"
-            value={formData.nickname}
+            value={formData.nickname || ''}
             onChange={handleChange}
             error={
               errorMessages.nickname
@@ -75,7 +75,7 @@ export default function SignUpClient() {
 
           <PasswordFormControl
             id="confirmPassword"
-            value={formData.confirmPassword}
+            value={formData.confirmPassword || ''}
             onChange={handleChange}
             error={
               errorMessages.confirmPassword

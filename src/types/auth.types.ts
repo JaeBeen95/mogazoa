@@ -2,9 +2,9 @@ export type FormField = 'email' | 'nickname' | 'password' | 'confirmPassword'
 
 export interface FormData {
   email: string
-  nickname: string
+  nickname?: string
   password: string
-  confirmPassword: string
+  confirmPassword?: string
 }
 
 export interface FormErrorMessages {
@@ -15,6 +15,12 @@ export interface FormErrorMessages {
 }
 
 export interface SignUpApiRequest {
+  email: string
+  nickname: string
+  password: string
+}
+
+export interface SignInApiRequest {
   email: string
   nickname: string
   password: string

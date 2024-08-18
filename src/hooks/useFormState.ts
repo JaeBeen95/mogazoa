@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import type { FormData, FormErrorMessages, FormField } from '@/types/auth.types'
 import { validationRules } from '@/constants/validationRules'
 
@@ -30,7 +30,7 @@ export const useFormState = (initialState: FormData) => {
     if (name === 'password') {
       const confirmPasswordError = validateField(
         'confirmPassword',
-        formData.confirmPassword,
+        formData.confirmPassword || '',
       )
       setErrorMessages((prev) => ({ ...prev, confirmPasswordError }))
     }
@@ -42,13 +42,14 @@ export const useFormState = (initialState: FormData) => {
     updateErrors(name, value)
   }
 
-  const isFormValid = () => {
-    const isAllFieldsFilled = Object.values(formData).every(Boolean)
-    const isNoErrors = Object.values(errorMessages).every(
-      (error) => error === undefined,
+  const isFormValid = useCallback(() => {
+    const requiredFields = Object.keys(formData) as FormField[]
+    const isAllFieldsFilled = requiredFields.every(
+      (field) => formData[field] !== '',
     )
+    const isNoErrors = requiredFields.every((field) => !errorMessages[field])
     return isAllFieldsFilled && isNoErrors
-  }
+  }, [formData, errorMessages])
 
   const getApiRequestData = () => {
     const { confirmPassword, ...rest } = formData

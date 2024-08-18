@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode } from 'react'
 
-export type InputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => void
+export type FormChangeHandler = (e: ChangeEvent<HTMLInputElement>) => void
 
 export interface ErrorType {
   message: string
@@ -9,13 +9,13 @@ export interface ErrorType {
 export interface FieldContextType {
   id: string
   value: string
-  onChange: InputChangeHandler
+  onChange: FormChangeHandler
   error?: ErrorType
   disabled?: boolean
   children?: ReactNode
 }
 
-export interface PasswordInputContextType extends FieldContextType {
+export interface PasswordFieldContextType extends FieldContextType {
   isPasswordVisible: boolean
   setIsPasswordVisible: (isVisible: boolean) => void
 }

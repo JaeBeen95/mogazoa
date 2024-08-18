@@ -1,4 +1,3 @@
-import FormControl from './FormControl'
-import PasswordFormControl from './PasswordFormControl'
+import { FormControl, PasswordFormControl } from './FormControl'
 
 export { FormControl, PasswordFormControl }
